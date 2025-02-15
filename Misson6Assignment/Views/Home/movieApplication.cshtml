@@ -1,0 +1,62 @@
+﻿@model Review
+
+<h1>Movie Review Page</h1>
+
+<form method="post" asp-action="MovieApplication">
+    <label asp-for="Category">Category</label>
+    <input asp-for="Category" type="text" required />
+    <br />
+    <label asp-for="Title">Title</label>
+    <input asp-for="Title" type="text" required />
+    <br />
+    <label asp-for="Year">Year</label>
+    <input asp-for="Year" type="number" required />
+    <br />
+    <label asp-for="Director">Director</label>
+    <input asp-for="Director" type="text" required />
+    <br />
+    <label asp-for="Rating">Rating</label>
+    <select asp-for="Rating" required>
+        <option value="G">G</option>
+        <option value="PG">PG</option>
+        <option value="PG-13">PG-13</option>
+        <option value="R">R</option>
+    </select>
+    <br />
+    <label asp-for="Edited">Edited</label>
+    <input asp-for="Edited" type="radio" value="true" id="yes" /> Yes
+    <input asp-for="Edited" type="radio" value="false" id="no" /> No
+    <input asp-for="Edited" type="radio" value="" id="null" hidden /> <!-- For null value -->
+    <br />
+    <label asp-for="LentTo">Lent To</label>
+    <input asp-for="LentTo" type="text" />
+    <br />
+    <label asp-for="Notes">Notes</label>
+    <input asp-for="Notes" type="text" maxlength="25" />
+    <br />
+    <button type="submit">Submit Review</button>
+</form>
+
+<script>
+    // When the form is submitted, check if 'Edited' is left blank, and set it to null if needed
+    document.querySelector("form").onsubmit = function() {
+        var editedField = document.querySelector("input[name='Edited']:checked");
+        if (!editedField) {
+            // If no radio button for 'Edited' is selected, set the value to null
+            document.querySelector("input[name='Edited'][value='']").value = null;
+        }
+
+        // Check and convert empty values to null for 'LentTo'
+        var lentToField = document.querySelector("input[name='LentTo']");
+        if (!lentToField.value.trim()) {
+            lentToField.value = null; // Set to null if left blank
+        }
+
+        // Check and convert empty values to null for 'Notes'
+        var notesField = document.querySelector("input[name='Notes']");
+        if (!notesField.value.trim()) {
+            notesField.value = null; // Set to null if left blank
+        }
+    };
+</script>
+
