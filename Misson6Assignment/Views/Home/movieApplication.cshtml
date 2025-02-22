@@ -1,40 +1,91 @@
-﻿@model Review
+﻿@model Movies
 
 <h1>Movie Review Page</h1>
 
-<form method="post" asp-action="MovieApplication">
-    <label asp-for="Category">Category</label>
-    <input asp-for="Category" type="text" required />
-    <br />
-    <label asp-for="Title">Title</label>
+<form method="post" asp-action="@(Model.MovieId == 0 ? "MovieApplication" : "Edit")">
+
+
+    <input type="hidden" asp-for="MovieId"/>
+
+    <label asp-for="Title">Title:</label>
     <input asp-for="Title" type="text" required />
     <br />
-    <label asp-for="Year">Year</label>
-    <input asp-for="Year" type="number" required />
+
+
+    <label asp-for="Year">Year:</label>
+    <input asp-for="Year" type="number" required min="1888"/>
     <br />
-    <label asp-for="Director">Director</label>
+
+
+    <label asp-for="Director">Director:</label>
     <input asp-for="Director" type="text" required />
     <br />
-    <label asp-for="Rating">Rating</label>
+
+
+    <label asp-for="CategoryId">Category:</label>
+    <select asp-for="CategoryId" class="form-control w-auto">
+        <option value="">Select a Category</option>
+        @foreach (var category in ViewBag.Categories)
+        {
+            <option value="@category.CategoryId">@category.CategoryName</option>
+        }
+    </select>
+    <br />
+
+
+    <label asp-for="Rating">Rating:</label>
     <select asp-for="Rating" required>
         <option value="G">G</option>
         <option value="PG">PG</option>
         <option value="PG-13">PG-13</option>
         <option value="R">R</option>
+        <option value="UR">UR</option>
+        <option value="NR">NR</option>
+        <option value="TV-G">TV-G</option>
+        <option value="TV-PG">TV-PG</option>
+        <option value="TV-Y7">TV-Y7</option>
+        <option value="TV-14">TV-14</option>
     </select>
     <br />
-    <label asp-for="Edited">Edited</label>
-    <input asp-for="Edited" type="radio" value="true" id="yes" /> Yes
-    <input asp-for="Edited" type="radio" value="false" id="no" /> No
-    <input asp-for="Edited" type="radio" value="" id="null" hidden /> <!-- For null value -->
-    <br />
-    <label asp-for="LentTo">Lent To</label>
+
+
+    <div class="form-group">
+        <label>Edited</label><br />
+
+        <input type="radio" asp-for="Edited" value="true" class="form-check-input" required />
+        <label class="form-check-label">Yes</label>
+
+        <input type="radio" asp-for="Edited" value="false" class="form-check-input" required />
+        <label class="form-check-label">No</label>
+
+        <span asp-validation-for="Edited" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label>Copied to Plex</label><br />
+
+        <input type="radio" asp-for="CopiedToPlex" value="true" class="form-check-input" required />
+        <label class="form-check-label">Yes</label>
+
+        <input type="radio" asp-for="CopiedToPlex" value="false" class="form-check-input" required />
+        <label class="form-check-label">No</label>
+
+        <span asp-validation-for="CopiedToPlex" class="text-danger"></span>
+    </div>
+
+
+
+
+    <label asp-for="LentTo">Lent To:</label>
     <input asp-for="LentTo" type="text" />
     <br />
-    <label asp-for="Notes">Notes</label>
+
+
+    <label asp-for="Notes">Notes:</label>
     <input asp-for="Notes" type="text" maxlength="25" />
     <br />
-    <button type="submit">Submit Review</button>
+    <button type="submit">Submit</button>
 </form>
 
 <script>

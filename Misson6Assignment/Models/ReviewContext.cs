@@ -9,6 +9,7 @@ namespace Mission06_Pace.Models
 
         }
 
-        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Movies> Movies { get; set; }
+        public DbSet<Categories> Categories { get; set; }
     }
 }
